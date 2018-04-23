@@ -1,0 +1,28 @@
+{
+  "name": "minds-sockets",
+  "version": "1.0.0",
+  "description": "Sockets server for minds",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "typings install"
+  },
+  "author": "Mark Harding (mark@minds.com)",
+  "license": "TBC",
+  "dependencies": {
+    "async": "^1.5.2",
+    "cassandra-driver": "3.2.2",
+    "cookie": "^0.2.3",
+    "express": "^4.9.0",
+    "jsonwebtoken": "^5.4.1",
+    "lodash": "^4.0.0",
+    "msgpack-js": "0.3.0",
+    "redis": "0.12.1",
+    "socket.io": "^1.1.0",
+    "socket.io-redis": "git+https://github.com/markharding/socket.io-redis.git",
+    "twilio": "^2.2.1",
+    "yargs": "^3.25.0",
+    "debug": "^2.6.1",
+    "@types/node": "^8.0.55"
+  }
+}
