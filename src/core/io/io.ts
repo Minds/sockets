@@ -44,7 +44,7 @@ export class IO {
       jwt.verify(token, config.JWT_SECRET, (err, decoded) => {
 
         if(err){
-          //console.log('token not found');
+          console.log('[jwt]: token not found');
           return next(); //token not found, could be a mobile user though
         }
 
@@ -53,21 +53,28 @@ export class IO {
         let sessionId = decoded.sessionId;
 
         Helpers.getSession(sessionId)
-          .then((session : string) => {
+          .then((base64 : string) => {
+            let session;
+            try {
+              session = atob(base64);
+            } catch (err) {
+              session = base64; //incase its not
+            }
+            
             if(session.indexOf(guid) > -1){
               
               Bootstrap.register(socket, guid);
-              //console.log(`[jwt]: ${guid} just joined`);
+              console.log(`[jwt]: ${guid} just joined`);
 
               next();
             } else {
                 //session not found for user
-                //console.log('session not found for ' + guid);
+                console.log('[jwt]: session not found for ' + guid + ' ' + sessionId);
               return next();
             }
           })
           .catch(() => {
-            //console.log('no session found');
+            console.log('[jwt]: no session found');
             next();
           });
 

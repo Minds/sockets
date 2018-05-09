@@ -70,7 +70,7 @@ export class Helpers{
     //console.log(`[oauth]: ${token}`);
     return new Promise((resolve, reject) => {
 
-      cassandra.client.execute("SELECT * FROM entities WHERE \"KEY\"=?", [token], {prepare: true},
+      cassandra.client.execute("SELECT * FROM entities WHERE key=?", [token], {prepare: true},
         (err, result) => {
           if(err){
             //console.log(`[oauth]${token} failed`);
@@ -112,7 +112,23 @@ export class Helpers{
   /**
    * Return a session from a session token
    */
-   public static getSession(id){
+   public static async getSession(id){
+    let redis = Di.get('data/redis');
+
+    try {
+      let cached = await new Promise((resolve, reject) => {
+        redis.client.get(id, (err, response) => {
+          if(err){
+            reject(err);
+            return false;
+          }
+          resolve(response);
+        });
+      });
+      if (cached)
+        return cached;
+    } catch (err) { }
+
     let cassandra = Di.get('data/cassandra');
     return new Promise((resolve, reject) => {
       cassandra.client.execute(
