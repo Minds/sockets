@@ -2,7 +2,7 @@ import * as async from 'async';
 import { Di } from '../core/di/di';
 import { Helpers } from '../helpers';
 import * as config from '../../config';
-let twilio = require('twilio')(config.TWILIO.ID, config.TWILIO.SECRET);
+//let twilio = require('twilio')(config.TWILIO.ID, config.TWILIO.SECRET);
 
 
 export class SendMessage {
@@ -28,7 +28,7 @@ export class SendMessage {
 
     });
 
-    this.socket.on('turnToken', (guid) => {
+    /*this.socket.on('turnToken', (guid) => {
         twilio.tokens.create((err, response) => {
             if(err){
               //console.log(err);
@@ -37,7 +37,7 @@ export class SendMessage {
                 //console.log('sent a twillio token: ' + this.socket.id);
             }
         });
-      });
+      });*/
   }
 
   send(from_guid : string | number, to_sockets : Array<string>, message : Array<any>){
